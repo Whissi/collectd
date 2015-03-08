@@ -3155,14 +3155,14 @@ AC_ARG_WITH(oracle, [AS_HELP_STRING([--with-oracle@<:@=ORACLE_HOME@:>@], [Path t
 ])
 if test "x$ORACLE_HOME" != "x"
 then
-	with_oracle_cppflags="-I$ORACLE_HOME/rdbms/public"
+	with_oracle_cppflags="-I$ORACLE_HOME/rdbms/public -locci"
 
 	if test -e "$ORACLE_HOME/lib/ldflags"
 	then
 		with_oracle_libs=`cat "$ORACLE_HOME/lib/ldflags"`
 	fi
 	#with_oracle_libs="-L$ORACLE_HOME/lib $with_oracle_libs -lclntsh"
-	with_oracle_libs="-L$ORACLE_HOME/lib -lclntsh"
+	with_oracle_libs="-L$ORACLE_HOME/lib -lclntsh -locci"
 fi
 if test "x$with_oracle" = "xyes"
 then
