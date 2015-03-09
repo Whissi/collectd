@@ -1501,18 +1501,7 @@ AC_CHECK_LIB(resolv, res_search,
 AM_CONDITIONAL(BUILD_WITH_LIBRESOLV, test "x$with_libresolv" = "xyes")
 
 dnl Check for HAL (hardware abstraction library)
-with_libhal="yes"
-AC_CHECK_LIB(hal,libhal_device_property_exists,
-	     [AC_DEFINE(HAVE_LIBHAL, 1, [Define to 1 if you have 'hal' library])],
-	     [with_libhal="no"])
-if test "x$with_libhal" = "xyes"; then
-	if test "x$PKG_CONFIG" != "x"; then
-		BUILD_WITH_LIBHAL_CFLAGS="`$PKG_CONFIG --cflags hal`"
-		BUILD_WITH_LIBHAL_LIBS="`$PKG_CONFIG --libs hal`"
-		AC_SUBST(BUILD_WITH_LIBHAL_CFLAGS)
-		AC_SUBST(BUILD_WITH_LIBHAL_LIBS)
-	fi
-fi
+with_libhal="no"
 
 m4_divert_once([HELP_WITH], [
 collectd additional packages:])
