@@ -1,10 +1,4 @@
-ACLOCAL_AMFLAGS = -I libltdl/m4
-
 SUBDIRS =
-
-if BUILD_INCLUDED_LTDL
-SUBDIRS += libltdl
-endif
 
 SUBDIRS += src bindings .
 
