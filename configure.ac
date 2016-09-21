@@ -3,7 +3,6 @@ AC_PREREQ([2.60])
 AC_INIT([collectd],[m4_esyscmd(./version-gen.sh)])
 AC_CONFIG_SRCDIR(src/target_set.c)
 AC_CONFIG_HEADERS(src/config.h)
-AC_CONFIG_AUX_DIR([libltdl/config])
 
 dnl older automake's default of ARFLAGS=cru is noisy on newer binutils;
 dnl we don't really need the 'u' even in older toolchains.  Then there is
@@ -13,7 +12,6 @@ m4_divert_text([DEFAULTS], [: "${ARFLAGS=cr} ${AR_FLAGS=cr}"])
 m4_ifdef([LT_PACKAGE_VERSION],
 	# libtool >= 2.2
 	[
-	 LT_CONFIG_LTDL_DIR([libltdl])
 	 LT_INIT([dlopen])
 	 LTDL_INIT([convenience])
 	 AC_DEFINE(LIBTOOL_VERSION, 2, [Define to used libtool version.])
@@ -25,12 +23,14 @@ m4_ifdef([LT_PACKAGE_VERSION],
 	 AC_SUBST(LTDLINCL)
 	 AC_SUBST(LIBLTDL)
 	 AC_LIBTOOL_DLOPEN
-	 AC_CONFIG_SUBDIRS(libltdl)
 	 AC_DEFINE(LIBTOOL_VERSION, 1, [Define to used libtool version.])
 	]
 )
 
-AM_CONDITIONAL([BUILD_INCLUDED_LTDL], [test "x$LTDLDEPS" != "x"])
+if test "x$LTDLDEPS" != "x"
+then
+	AC_MSG_ERROR(["system's libltdl is too old! Should never happen. Please file a bug at https://bugs.gentoo.org"])
+fi
 
 AM_INIT_AUTOMAKE([subdir-objects tar-pax dist-bzip2 no-dist-gzip foreign])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
