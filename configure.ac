@@ -1663,30 +1663,6 @@ AM_CONDITIONAL(BUILD_WITH_LIBRESOLV, test "x$with_libresolv" = "xyes")
 
 dnl Check for HAL (hardware abstraction library)
 with_libhal="no"
-PKG_CHECK_MODULES([HAL], [hal],
-  [
-    SAVE_LIBS="$LIBS"
-    LIBS="$HAL_LIBS $LIBS"
-    AC_CHECK_LIB([hal], [libhal_device_property_exists],
-      [
-        SAVE_CPPFLAGS="$CPPFLAGS"
-        CPPFLAGS="$HAL_CFLAGS $CPPFLAGS"
-        AC_CHECK_HEADERS([libhal.h],
-        [
-          with_libhal="yes"
-          BUILD_WITH_LIBHAL_CFLAGS="$HAL_CFLAGS"
-          BUILD_WITH_LIBHAL_LIBS="$HAL_LIBS"
-        ])
-        CPPFLAGS="$SAVE_CPPFLAGS"
-      ],
-      [ : ]
-    )
-    LIBS="$SAVE_LIBS"
-  ],
-  [ : ]
-)
-AC_SUBST(BUILD_WITH_LIBHAL_CFLAGS)
-AC_SUBST(BUILD_WITH_LIBHAL_LIBS)
 
 
 SAVE_LIBS="$LIBS"
